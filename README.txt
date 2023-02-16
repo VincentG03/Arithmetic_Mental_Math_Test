@@ -21,7 +21,8 @@ DIVISON (always give answer of multiple of 0.5, one digit divisor) (always give 
 [ ] Interface (tkinter)
 [ ] Timer for each type of question (i.e you may) (which section they look the longest on)
 [ ] Have an option of what question types they want 
-
+[ ] Make the text not just appear, but type it out. 
+[ ] Easter egg, number of questions = 0 (check line 21 main file)
 
 Known issues:
 - When accepting input answers, does not catch error of when its not a number - assuming we would need try except statements but the body would be too long (read elsewhere that you should keep try statemnts as small as possible)

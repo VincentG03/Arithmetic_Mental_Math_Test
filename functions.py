@@ -6,27 +6,33 @@ import decimal as dec
 
 def difficulty_screen():
     print("/////////////////////////////////////////")
-    while True:
+    valid_number_of_questions = False
+    while valid_number_of_questions == False:
         user_questions = input("How many questions would you like to complete?: ")
-        try: 
+
+        #Verifying valid user input.
+        try:
             user_questions = int(user_questions)
-            if user_questions > 0:
-                break
-            else: 
-                print(f"'{user_questions}' is not a valid input. Please enter a positive integer.")
-        except:
+        except ValueError:
             print(f"'{user_questions}' is not a valid input. Please enter a positive integer.")
+        else: 
+            valid_number_of_questions = True 
+
+    if user_questions == 0: #TO BE ADDED AFTER GUI 
+        print("going to add an easter egg here later ")
+        exit()
 
     print("There are three difficulties:")
     print("1. Easy")
     print("2. Medium")
     print("3. Hard")
 
-    while True:
+    valid_user_difficulty = False
+    while valid_user_difficulty == False:
         user_difficulty = input("Please select your difficulty: ")
         try:
             user_difficulty = int(user_difficulty)
-        except:
+        except ValueError:
             print(f"'{user_difficulty}' is not a valid input. Please enter an integer input!")
             continue
         else:
