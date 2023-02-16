@@ -1,12 +1,9 @@
 from functions import *
 
-#[x] Add a timer in
-#[x] Add something to keep track of score
-#[x] Add a timer to the run_questions 
-#[x] Add improvement message
-
 if __name__ == "__main__":      
-    while True:
+    continue_check = 1 
+
+    while continue_check == 1:
         user_difficulty, user_questions = difficulty_screen() #Print difficulty screen
         user_score, elapsed_time, number_of_questions, incorrect_list =  run_questions(user_difficulty, user_questions)
         print("/////////////////////////////////////////")
@@ -29,21 +26,30 @@ if __name__ == "__main__":
             for i in range(len(incorrect_list)):
                 if incorrect_list[i] == "a.s":
                     number_qs_wrong = incorrect_list[i+1]
-                    print(f"You may wish to revise addition and subtraction of integers as you got {number_qs_wrong} question/s wrong.")
+                    if number_qs_wrong == 1: 
+                        print(number_qs_wrong)
+                        print(f"You may wish to revise addition and subtraction of integers as you got a question wrong.")
+                    else:
+                        print(f"You may wish to revise addition and subtraction of integers as you got {number_qs_wrong} question/s wrong.")
                 if incorrect_list[i] == "m":
                     number_qs_wrong = incorrect_list[i+1]
-                    print(f"You may wish to revise multiplication of integers as you got {number_qs_wrong} question/s wrong.")
+                    if number_qs_wrong == 1: 
+                        print(number_qs_wrong)
+                        print(f"You may wish to revise addition and subtraction of integers as you got a question wrong.")
+                    else:
+                        print(f"You may wish to revise addition and subtraction of integers as you got {number_qs_wrong} question/s wrong.")
                 if incorrect_list[i] == "d":
                     number_qs_wrong = incorrect_list[i+1]
-                    print(f"You may wish to revise division of integers as you got {number_qs_wrong} question/s wrong.")
+                    print(number_qs_wrong)
+                    if number_qs_wrong == 1: 
+                        print(f"You may wish to revise addition and subtraction of integers as you got a question wrong.")
+                    else:
+                        print(f"You may wish to revise addition and subtraction of integers as you got {number_qs_wrong} question/s wrong.")
         else:
-            print("Congratulations for getting every single question correct!")
+            print("Congratulations on getting every single question correct!")
         
         print("/////////////////////////////////////////")
         play_again = input("Would you like to play again? (Y/N): ")
-        if play_again == "Y" or play_again == "y":
-            continue
-        else: 
+        if play_again == "N" or play_again == "n":
             print("Thank you for playing, stay smart :)")
-            break   
-        
+            continue_check = 0  

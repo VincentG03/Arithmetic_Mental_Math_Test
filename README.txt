@@ -1,6 +1,6 @@
 Author: Vincent Giang 
 Created: 02-12-2022
-Status: runnable, ongoing process to add more complex questions
+Status: runnable, improvements continue to be added and are outlined below 
 
 
 Program process:
@@ -9,7 +9,7 @@ Program process:
     - Addition and subtraction of integers 
     - Multiplication of integers 
     - Division with integer results 
-- Print result along with useful statistics and feedback (if any answers were wrong)
+- Print result along with useful statistics and feedback 
 
 
 To be added:
@@ -19,6 +19,7 @@ DIVISON (always give answer of multiple of 0.5, one digit divisor) (always give 
 
 [ ] Fraction stuff (fractional adding)
 [ ] Interface (tkinter)
+[ ] Timer for each type of question (i.e you may)
 
 
 Known issues:
