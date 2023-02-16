@@ -12,9 +12,9 @@ def difficulty_screen():
             if user_questions > 0:
                 break
             else: 
-                print(f"{user_questions} is not a valid input. Please enter a positive integer.")
+                print(f"'{user_questions}' is not a valid input. Please enter a positive integer.")
         except:
-            print(f"{user_questions} is not a valid input. Please enter a positive integer.")
+            print(f"'{user_questions}' is not a valid input. Please enter a positive integer.")
 
     print("There are three difficulties:")
     print("1. Easy")
@@ -26,7 +26,7 @@ def difficulty_screen():
         try:
             user_difficulty = int(user_difficulty)
         except:
-            print(f"'{user_difficulty}' is not a valid input. Please enter an integer input.")
+            print(f"'{user_difficulty}' is not a valid input. Please enter an integer input!")
             continue
         else:
             if user_difficulty<=3 and user_difficulty>=1: #Change this if added more conditions
@@ -46,14 +46,14 @@ def run_questions(user_difficulty, user_questions):
     incorrect_multiplication_integer = 0
     incorrect_division_integer = 0
 
-    print("/////////////////////////////////////////\nPlease only input NUMERICAL answers.\nThe test will commence in 5 seconds.\n/////////////////////////////////////////")
+    print("/////////////////////////////////////////\nPlease only input numerical values.\nThe test will commence in 5 seconds.\n/////////////////////////////////////////")
     time.sleep(5)
     start_timer = time.time()
 
     for i in range(user_questions): 
         test_type = random.random()
 
-        #This prompts the user with questions 
+        #This prompts the user with questions (Adjust this if added new question types)
         if test_type <= 0.33: #33% chance --> Run addition_subtraction_integer
             user_score_add, incorrect_addition_subtraction_integer_add = addition_subtraction_integer(user_difficulty)
             user_score += user_score_add
@@ -105,10 +105,23 @@ def addition_subtraction_integer(user_difficulty):
     if user_difficulty == 1: #Two, one digit numbers
         first_number = int(random.randint(1,9))
         second_number = int(random.randint(1,9))
-        user_answer = int(input(f"Compute: {first_number} {plus_minus} {second_number} = "))
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
         if plus_minus == "+":
             answer = first_number + second_number
-            if user_answer == answer:
+            if int(user_answer) == answer:
                 user_score_add += 1 
                 return user_score_add, incorrect_addition_subtraction_integer
             else: 
@@ -116,7 +129,7 @@ def addition_subtraction_integer(user_difficulty):
                 return user_score_add, incorrect_addition_subtraction_integer
         else: 
             answer = first_number - second_number
-            if user_answer == answer:
+            if int(user_answer) == answer:
                 user_score_add += 1 
                 return user_score_add, incorrect_addition_subtraction_integer
             else: 
@@ -127,10 +140,23 @@ def addition_subtraction_integer(user_difficulty):
     if user_difficulty == 2: #Two, two digit numbers
         first_number = int(random.randint(10,99))
         second_number = int(random.randint(10,99))
-        user_answer = int(input(f"Compute: {first_number} {plus_minus} {second_number} = "))
+        
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
         if plus_minus == "+":
             answer = first_number + second_number
-            if user_answer == answer:
+            if int(user_answer) == answer:
                 user_score_add += 1 
                 return user_score_add, incorrect_addition_subtraction_integer
             else: 
@@ -138,7 +164,7 @@ def addition_subtraction_integer(user_difficulty):
                 return user_score_add, incorrect_addition_subtraction_integer
         else: 
             answer = first_number - second_number
-            if user_answer == answer:
+            if int(user_answer) == answer:
                 user_score_add += 1 
                 return user_score_add , incorrect_addition_subtraction_integer
             else: 
@@ -149,10 +175,23 @@ def addition_subtraction_integer(user_difficulty):
     if user_difficulty == 3: #Two, three digits numbers 
         first_number = int(random.randint(100,999))
         second_number = int(random.randint(100,999))
-        user_answer = int(input(f"Compute: {first_number} {plus_minus} {second_number} = "))
+        
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
         if plus_minus == "+": #Account for either a + or -
             answer = first_number + second_number 
-            if user_answer == answer:
+            if int(user_answer) == answer:
                 user_score_add += 1 
                 return user_score_add, incorrect_addition_subtraction_integer
             else: 
@@ -160,7 +199,7 @@ def addition_subtraction_integer(user_difficulty):
                 return user_score_add, incorrect_addition_subtraction_integer
         else: 
             answer = first_number - second_number
-            if user_answer == answer:
+            if int(user_answer) == answer:
                 user_score_add += 1 
                 return user_score_add, incorrect_addition_subtraction_integer
             else: 
@@ -180,11 +219,24 @@ def multiplication_integer(user_difficulty):
     incorrect_multiplication_integer = 0 
 
     if user_difficulty == 1:
-        first_number = random.randint(1,9)
+        first_number = random.randint(-9,9)
         second_number = random.randint(1,9)
         answer = first_number * second_number
-        user_answer = int(input(f"Compute: {first_number} * {second_number} = "))
-        if user_answer == answer:
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} * {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if int(user_answer) == answer:
             user_score_add += 1
             return user_score_add, incorrect_multiplication_integer
         else:
@@ -192,11 +244,24 @@ def multiplication_integer(user_difficulty):
             return user_score_add, incorrect_multiplication_integer
 
     if user_difficulty == 2:
-        first_number = random.randint(1,9)
+        first_number = random.randint(-9,9)
         second_number = random.randint(10,99)
         answer = first_number * second_number
-        user_answer = int(input(f"Compute: {first_number} * {second_number} = "))
-        if user_answer == answer:
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} * {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if int(user_answer) == answer:
             user_score_add += 1
             return user_score_add, incorrect_multiplication_integer
         else:
@@ -204,11 +269,24 @@ def multiplication_integer(user_difficulty):
             return user_score_add, incorrect_multiplication_integer
 
     if user_difficulty == 3:
-        first_number = random.randint(10,50)
+        first_number = random.randint(-10,50)
         second_number = random.randint(10,50)
         answer = first_number * second_number
-        user_answer = int(input(f"Compute: {first_number} * {second_number} = "))
-        if user_answer == answer:
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} * {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if int(user_answer) == answer:
             user_score_add += 1
             return user_score_add, incorrect_multiplication_integer
         else:
@@ -226,13 +304,27 @@ def division_integer(user_difficulty):
     incorrect_division_integer = 0 
     #The method to calculate which number to be divided, is to find the expected answer first, then multiply them together to 
     #get the, "to_be_divided" value
+
+
     if user_difficulty == 1:
-        divisor = random.randint(1,9)
+        divisor = random.randint(-9,9)
         calculate_to_be_divided = random.randint(1,9)
         to_be_divided = calculate_to_be_divided*divisor
 
-        user_answer = int(input(f"Compute: {to_be_divided}/{divisor} = "))
-        if user_answer == calculate_to_be_divided:
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {to_be_divided} / {divisor} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if int(user_answer) == calculate_to_be_divided:
             user_score_add += 1 
             return user_score_add, incorrect_division_integer
         else:
@@ -240,12 +332,24 @@ def division_integer(user_difficulty):
             return user_score_add, incorrect_division_integer
 
     if user_difficulty == 2:
-        divisor = random.randint(1,9)
+        divisor = random.randint(-9,9)
         calculate_to_be_divided = random.randint(10,25)
         to_be_divided = calculate_to_be_divided*divisor
 
-        user_answer = int(input(f"Compute: {to_be_divided}/{divisor} = "))
-        if user_answer == calculate_to_be_divided:
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {to_be_divided} / {divisor} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+        
+        if int(user_answer) == calculate_to_be_divided:
             user_score_add += 1 
             return user_score_add, incorrect_division_integer
         else:
@@ -253,12 +357,24 @@ def division_integer(user_difficulty):
             return user_score_add, incorrect_division_integer
 
     if user_difficulty == 3:
-        divisor = random.randint(1,9)
+        divisor = random.randint(-9,9)
         calculate_to_be_divided = random.randint(26,50)
         to_be_divided = calculate_to_be_divided*divisor
 
-        user_answer = int(input(f"Compute: {to_be_divided}/{divisor} = "))
-        if user_answer == calculate_to_be_divided:
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {to_be_divided} / {divisor} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if int(user_answer) == calculate_to_be_divided:
             user_score_add += 1 
             return user_score_add, incorrect_division_integer
         else:
@@ -276,17 +392,17 @@ def addition_subtraction_decimal(user_difficulty):
     user_score = 0 
     incorrect_addition_subtraction_decimal = 0
 
-    if user_difficulty == 0:
+    if user_difficulty == 1:
         pass
         # first_number_integer =
         # first_number_float = 
         # second_number_integer = 
         # second_number_float = 
     
-    if user_difficulty == 1:
+    if user_difficulty == 2:
         pass
 
-    if user_difficulty == 2:
+    if user_difficulty == 3:
         pass
 
 def multiplication_decimal(): 
