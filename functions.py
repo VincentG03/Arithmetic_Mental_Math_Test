@@ -62,7 +62,6 @@ def run_questions(user_difficulty, user_questions):
 
     for i in range(user_questions): 
         test_type = random.random()
-        test_type = 0.8
 
         #This prompts the user with questions (Adjust this if added new question types)
         if test_type <= 0.25: #Run addition_subtraction_integer
