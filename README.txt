@@ -19,7 +19,8 @@ DIVISON (always give answer of multiple of 0.5, one digit divisor) (always give 
 
 [ ] Fraction stuff (fractional adding)
 [ ] Interface (tkinter)
-[ ] Timer for each type of question (i.e you may)
+[ ] Timer for each type of question (i.e you may) (which section they look the longest on)
+[ ] Have an option of what question types they want 
 
 
 Known issues:

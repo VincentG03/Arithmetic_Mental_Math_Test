@@ -1,5 +1,6 @@
 import random
 import time
+import decimal as dec
 
 
 
@@ -19,7 +20,7 @@ def difficulty_screen():
     print("There are three difficulties:")
     print("1. Easy")
     print("2. Medium")
-    print("3. Hard :)")
+    print("3. Hard")
 
     while True:
         user_difficulty = input("Please select your difficulty: ")
@@ -42,9 +43,12 @@ def run_questions(user_difficulty, user_questions):
     run_question prompts the user with "x" questions. The question type is randomly generated (with bias) from the percentage calculations below.
     """
     user_score = 0
-    incorrect_addition_subtraction_integer = 0 
-    incorrect_multiplication_integer = 0
-    incorrect_division_integer = 0
+
+    #Update this when adding new question types 
+    incorrect_addition_subtraction_integer_total = 0 
+    incorrect_multiplication_integer_total = 0
+    incorrect_division_integer_total = 0
+    incorrect_addition_subtraction_decimal_total = 0
 
     print("/////////////////////////////////////////\nPlease only input numerical values.\nThe test will commence in 5 seconds.\n/////////////////////////////////////////")
     time.sleep(5)
@@ -52,33 +56,45 @@ def run_questions(user_difficulty, user_questions):
 
     for i in range(user_questions): 
         test_type = random.random()
+        test_type = 0.8
 
         #This prompts the user with questions (Adjust this if added new question types)
-        if test_type <= 0.33: #33% chance --> Run addition_subtraction_integer
+        if test_type <= 0.25: #Run addition_subtraction_integer
             user_score_add, incorrect_addition_subtraction_integer_add = addition_subtraction_integer(user_difficulty)
             user_score += user_score_add
-            incorrect_addition_subtraction_integer += incorrect_addition_subtraction_integer_add
-        if  0.34 < test_type <= 0.66: #33% chance --> Run multiplication_integer
+            incorrect_addition_subtraction_integer_total += incorrect_addition_subtraction_integer_add
+        elif  0.25 < test_type <= 0.50: #Run multiplication_integer
             user_score_add, incorrect_multiplication_integer_add = multiplication_integer(user_difficulty)
             user_score += user_score_add
-            incorrect_multiplication_integer += incorrect_multiplication_integer_add
-        if 0.67 < test_type <= 1: #33% chance --> Run division_integer
+            incorrect_multiplication_integer_total += incorrect_multiplication_integer_add
+        elif 0.50 < test_type <= 0.75: #Run division_integer
             user_score_add, incorrect_division_integer_add = division_integer(user_difficulty)
             user_score += user_score_add
-            incorrect_division_integer += incorrect_division_integer_add
+            incorrect_division_integer_total += incorrect_division_integer_add
+        else: #Run addition_subtraction_decimal
+            user_score_add, incorrect_addition_subtraction_decimal_add = addition_subtraction_decimal(user_difficulty)
+            user_score += user_score_add
+            incorrect_addition_subtraction_decimal_total += incorrect_addition_subtraction_decimal_add
 
-    #This readies the feedback to be returned.
+
+    #This readies the feedback to be returned (if any)
     incorrect_list =[]
-    if incorrect_addition_subtraction_integer >= incorrect_multiplication_integer and incorrect_addition_subtraction_integer >= incorrect_division_integer:
-        incorrect_list.append("a.s")
-        incorrect_list.append(incorrect_addition_subtraction_integer)
-    if incorrect_multiplication_integer >= incorrect_division_integer and incorrect_multiplication_integer >= incorrect_addition_subtraction_integer:
-        incorrect_list.append("m")
-        incorrect_list.append(incorrect_multiplication_integer)
-    if incorrect_division_integer >= incorrect_multiplication_integer and incorrect_division_integer >= incorrect_addition_subtraction_integer:
-        incorrect_list.append("d")
-        incorrect_list.append(incorrect_division_integer)
-    
+    if incorrect_addition_subtraction_integer_total != 0:
+        incorrect_list.append("integer addition subtraction")
+        incorrect_list.append(incorrect_addition_subtraction_integer_total)
+
+    if incorrect_multiplication_integer_total != 0:
+        incorrect_list.append("integer multiplication")
+        incorrect_list.append(incorrect_multiplication_integer_total)
+
+    if incorrect_division_integer_total != 0:
+        incorrect_list.append("integer division")
+        incorrect_list.append(incorrect_division_integer_total)
+
+    if incorrect_addition_subtraction_decimal_total != 0:
+        incorrect_list.append("decimal addition subtraction")
+        incorrect_list.append(incorrect_addition_subtraction_decimal_total)
+   
 
     stop_timer = time.time()
     elapsed_time = stop_timer - start_timer
@@ -100,6 +116,7 @@ def addition_subtraction_integer(user_difficulty):
         plus_minus = "+"
     else:
         plus_minus = "-"
+
 
     #Difficulty "Easy"
     if user_difficulty == 1: #Two, one digit numbers
@@ -136,6 +153,7 @@ def addition_subtraction_integer(user_difficulty):
                 incorrect_addition_subtraction_integer += 1
                 return user_score_add, incorrect_addition_subtraction_integer
 
+
     #Difficulty "Medium"
     if user_difficulty == 2: #Two, two digit numbers
         first_number = int(random.randint(10,99))
@@ -170,6 +188,7 @@ def addition_subtraction_integer(user_difficulty):
             else: 
                 incorrect_addition_subtraction_integer += 1
                 return user_score_add, incorrect_addition_subtraction_integer
+
 
     #Difficulty "Hard :)"
     if user_difficulty == 3: #Two, three digits numbers 
@@ -218,6 +237,7 @@ def multiplication_integer(user_difficulty):
     user_score_add = 0
     incorrect_multiplication_integer = 0 
 
+
     if user_difficulty == 1:
         first_number = random.randint(-9,9)
         second_number = random.randint(1,9)
@@ -243,6 +263,7 @@ def multiplication_integer(user_difficulty):
             incorrect_multiplication_integer += 1
             return user_score_add, incorrect_multiplication_integer
 
+
     if user_difficulty == 2:
         first_number = random.randint(-9,9)
         second_number = random.randint(10,99)
@@ -267,6 +288,7 @@ def multiplication_integer(user_difficulty):
         else:
             incorrect_multiplication_integer += 1
             return user_score_add, incorrect_multiplication_integer
+
 
     if user_difficulty == 3:
         first_number = random.randint(-10,50)
@@ -301,13 +323,17 @@ def division_integer(user_difficulty):
     Hard :) --> Answer = (1) single digit, (1) double digit (26 - 50)
     """
     user_score_add = 0
-    incorrect_division_integer = 0 
+    incorrect_division_integer_add = 0 
     #The method to calculate which number to be divided, is to find the expected answer first, then multiply them together to 
     #get the, "to_be_divided" value
 
-
     if user_difficulty == 1:
-        divisor = random.randint(-9,9)
+        pos_neg = random.random()
+        if pos_neg > 0.5:
+            divisor = random.randint(1,9) * (-1)
+        else: 
+            divisor = random.randint(1,9)
+
         calculate_to_be_divided = random.randint(1,9)
         to_be_divided = calculate_to_be_divided*divisor
 
@@ -326,13 +352,18 @@ def division_integer(user_difficulty):
 
         if int(user_answer) == calculate_to_be_divided:
             user_score_add += 1 
-            return user_score_add, incorrect_division_integer
+            return user_score_add, incorrect_division_integer_add
         else:
-            incorrect_division_integer += 1
-            return user_score_add, incorrect_division_integer
+            incorrect_division_integer_add += 1
+            return user_score_add, incorrect_division_integer_add
+
 
     if user_difficulty == 2:
-        divisor = random.randint(-9,9)
+        pos_neg = random.random()
+        if pos_neg > 0.5:
+            divisor = random.randint(1,9) * (-1)
+        else: 
+            divisor = random.randint(1,9)
         calculate_to_be_divided = random.randint(10,25)
         to_be_divided = calculate_to_be_divided*divisor
 
@@ -351,14 +382,20 @@ def division_integer(user_difficulty):
         
         if int(user_answer) == calculate_to_be_divided:
             user_score_add += 1 
-            return user_score_add, incorrect_division_integer
+            return user_score_add, incorrect_division_integer_add
         else:
-            incorrect_division_integer += 1
-            return user_score_add, incorrect_division_integer
+            incorrect_division_integer_add += 1
+            return user_score_add, incorrect_division_integer_add
+
 
     if user_difficulty == 3:
-        divisor = random.randint(-9,9)
-        calculate_to_be_divided = random.randint(26,50)
+        pos_neg = random.random()
+        if pos_neg > 0.5:
+            divisor = random.randint(5,19) * (-1)
+        else: 
+            divisor = random.randint(5,19)
+
+        calculate_to_be_divided = random.randint(10,19)
         to_be_divided = calculate_to_be_divided*divisor
 
         #Verify user answer is a number 
@@ -376,10 +413,10 @@ def division_integer(user_difficulty):
 
         if int(user_answer) == calculate_to_be_divided:
             user_score_add += 1 
-            return user_score_add, incorrect_division_integer
+            return user_score_add, incorrect_division_integer_add
         else:
-            incorrect_division_integer += 1 
-            return user_score_add, incorrect_division_integer
+            incorrect_division_integer_add += 1 
+            return user_score_add, incorrect_division_integer_add
 
 
 def addition_subtraction_decimal(user_difficulty): 
@@ -389,21 +426,114 @@ def addition_subtraction_decimal(user_difficulty):
     Medium --> x.xx += x.xx
     Hard :) --> xx.xxx += xx.xxx
     """
-    user_score = 0 
-    incorrect_addition_subtraction_decimal = 0
+    user_score_add = 0 
+    incorrect_addition_subtraction_decimal_add = 0
+
+    #Pick random either + or -
+    if random.random() < 0.5:
+        plus_minus = "+"
+    else:
+        plus_minus = "-"
+
+    #Pick if positive or negative numbers 
+    pos_neg = random.random()
+    if pos_neg > 0.5:
+        pos_neg_value = 1
+    else: 
+        pos_neg_value = -1
+
 
     if user_difficulty == 1:
-        pass
-        # first_number_integer =
-        # first_number_float = 
-        # second_number_integer = 
-        # second_number_float = 
-    
+        first_number = float(dec.Decimal(str(random.randint(1,9)*pos_neg_value+round(random.random(),1))))
+        second_number = float(dec.Decimal(str(random.randint(1,9)+round(random.random(),1))))
+        
+        if plus_minus == "+":
+            answer = first_number + second_number
+        else: 
+            answer = first_number - second_number 
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                float(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if float(user_answer) == float(answer):
+            user_score_add += 1 
+            return user_score_add, incorrect_addition_subtraction_decimal_add
+        else:
+            incorrect_addition_subtraction_decimal_add += 1 
+            return user_score_add, incorrect_addition_subtraction_decimal_add
+
+
     if user_difficulty == 2:
-        pass
+        first_number = float(dec.Decimal(str(random.randint(1,19)*pos_neg_value+round(random.random(),2))))
+        second_number = float(dec.Decimal(str(random.randint(1,9)+round(random.random(),2))))
+        
+        if plus_minus == "+":
+            answer = first_number + second_number
+        else: 
+            answer = first_number - second_number 
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                float(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if round(float(user_answer),2) == round(float(answer),2):
+            user_score_add += 1 
+            print("correct")
+            return user_score_add, incorrect_addition_subtraction_decimal_add
+        else:
+            incorrect_addition_subtraction_decimal_add += 1 
+            print("wrong")
+            return user_score_add, incorrect_addition_subtraction_decimal_add
 
     if user_difficulty == 3:
-        pass
+        first_number = float(dec.Decimal(str(random.randint(1,19)*pos_neg_value+round(random.random(),3))))
+        second_number = float(dec.Decimal(str(random.randint(1,19)+round(random.random(),3))))
+        
+        if plus_minus == "+":
+            answer = first_number + second_number
+        else: 
+            answer = first_number - second_number 
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                float(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if round(float(user_answer),3) == round(float(answer),3):
+            user_score_add += 1 
+            print("correct")
+            return user_score_add, incorrect_addition_subtraction_decimal_add
+        else:
+            incorrect_addition_subtraction_decimal_add += 1 
+            print("wrong")
+            return user_score_add, incorrect_addition_subtraction_decimal_add
 
 def multiplication_decimal(): 
     """
