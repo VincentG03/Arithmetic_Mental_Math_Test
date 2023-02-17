@@ -1,7 +1,7 @@
 import random
 import time
 import decimal as dec
-
+import fractions
 
 
 def difficulty_screen():
@@ -754,3 +754,61 @@ def division_decimal(user_difficulty):
         else:
             incorrect_division_integer_add += 1
             return user_score_add, incorrect_division_integer_add
+
+
+def addition_subtraction_fraction(user_difficulty): 
+    """
+    Perform addition and subtraction of fractions:
+    Easy --> x/x and x/x (denominator is a simple common factor)
+    Medium --> x/x and x/x (denonminator is not a common factor )
+    Hard --> x/xx and xx/x (denominator is not a commoon factor)
+    
+    """
+    user_score_add = 0 
+    incorrect_addition_subtraction_fraction_add = 0
+    
+    if random.random() > 0.5: 
+        plus_minus = "-"
+    else:
+        plus_minus = "+" 
+
+
+    if user_difficulty == 1: 
+        random_denominator = [0.5, 2, 3, 4, 5]
+        first_denom = random.random(1,9)
+        second_denom = first_denom * random.choice(random_denominator)
+
+        first_number = fractions.Fraction(random.randint(1,9),first_denom)
+        second_number = fractions.Fraction(random.randint(1,9), second_denom)
+
+        if plus_minus == "+":
+            answer = first_number + second_number
+        else:
+            answer = first_number - second_number 
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if str(answer) == user_answer: 
+            user_score_add += 1 
+            return user_score_add, incorrect_addition_subtraction_fraction_add 
+        else:
+            incorrect_addition_subtraction_fraction_add  += 1
+            return user_score_add, incorrect_addition_subtraction_fraction_add 
+
+
+def multiplication_fraction(user_difficulty):
+    pass 
+
+def division_fraction(user_difficulty): 
+    pass

@@ -5,10 +5,10 @@ if __name__ == "__main__":
 
     while continue_check == 1:
         #Print difficulty screen
-        user_difficulty, user_questions = difficulty_screen() 
+        user_difficulty, numnber_of_user_questions = difficulty_screen() 
 
         #Run questions and retrieve player data 
-        user_score, elapsed_time, number_of_questions, incorrect_list =  run_questions(user_difficulty, user_questions)
+        user_score, elapsed_time, number_of_questions, incorrect_list =  run_questions(user_difficulty, numnber_of_user_questions)
 
         #Print ending/feedback messages
         print("/////////////////////////////////////////")
