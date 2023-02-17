@@ -57,6 +57,13 @@ if __name__ == "__main__":
                         print("You may wish to revise multiplication of decimals as you got a question wrong.")
                     else:
                         print(f"You may wish to revise multiplication of decimals as you got {number_qs_wrong} questions wrong.")
+
+                if incorrect_list[i] == "decimal division":
+                    number_qs_wrong = incorrect_list[i+1]
+                    if number_qs_wrong == 1: 
+                        print("You may wish to revise division of decimals as you got a question wrong.")
+                    else:
+                        print(f"You may wish to revise division of decimals as you got {number_qs_wrong} questions wrong.")
                 
         else:
             print("Congratulations on getting every single question correct!")
