@@ -582,28 +582,65 @@ def multiplication_decimal(user_difficulty):
 
         if round(float(user_answer),1) == round(float(answer),1):
             user_score_add += 1 
-            print("correct") 
             return user_score_add, incorrect_multiplication_decimal_add
         else:
             incorrect_multiplication_decimal_add += 1 
-            print("wrong")
             return user_score_add, incorrect_multiplication_decimal_add
 
 
     if user_difficulty == 2: 
-        pass
+        first_number = float(random.randint(1,9)+dec.Decimal(str(pos_neg_value*round(random.random(),1))))
+        second_number = int(random.randint(1,9))
+        answer = first_number * second_number
+
+        while True:
+            user_answer = input(f"Compute: {first_number} × {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                float(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if round(float(user_answer),1) == round(float(answer),1):
+            user_score_add += 1 
+            return user_score_add, incorrect_multiplication_decimal_add
+        else:
+            incorrect_multiplication_decimal_add += 1 
+            return user_score_add, incorrect_multiplication_decimal_add
 
     if user_difficulty == 3: 
-        pass
+        first_number = float(random.randint(10,49)+dec.Decimal(str(pos_neg_value*round(random.random(),2))))
+        second_number = int(random.randint(1,9))
+        answer = first_number * second_number
 
+        while True:
+            user_answer = input(f"Compute: {first_number} × {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
 
+            try: 
+                float(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
 
+        if round(float(user_answer),1) == round(float(answer),1):
+            user_score_add += 1 
+            return user_score_add, incorrect_multiplication_decimal_add
+        else:
+            incorrect_multiplication_decimal_add += 1 
+            return user_score_add, incorrect_multiplication_decimal_add
 
     
 
 def division_decimal(): 
     """
-    Perform divison on deciamls resulting in:
+    Perform divison on decimals resulting in:
     Easy --> always give answer either no remainder or 0.5
     Medium --> always give answer of no remainder or 0.25, 0.5, 0.75
     Hard --> always give answer of no remainder or a multiple of 0.1
