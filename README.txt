@@ -6,13 +6,13 @@ Status: runnable, improvements continue to be added and are outlined below
 Program process:
 - Ask for user input for the number of questions and difficulty 
 - Depending on the input (number_of_user_questions, user_difficulty), prompt user (while factoring in desired difficuly) for answers to math questions of type:
-    - Addition and subtraction of integers (2x chance)
+    - Addition and subtraction of integers
     - Multiplication of integers 
     - Division with integer results 
-    - Addition and subtraction of decimals (2x chance)
+    - Addition and subtraction of decimals
     - Multiplication of decimals 
     - Division of decimals
-    - Addition and subtraction of fractions (2x chance)
+    - Addition and subtraction of fractions
     - Multipication of fractions 
     - Division of fractions
 - Print result along with useful statistics and feedback 
@@ -28,6 +28,6 @@ To be added:
 
 Known issues:
 - (FIXED) When accepting input answers, does not catch error of when its not a number - assuming we would need try except statements but the body would be too long (read elsewhere that you should keep try statemnts as small as possible)
-- Need to change the chace so its correct how it says in the program process 
+
 
 
