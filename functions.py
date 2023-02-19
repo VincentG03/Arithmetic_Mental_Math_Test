@@ -559,9 +559,9 @@ def addition_subtraction_decimal(user_difficulty):
 def multiplication_decimal(user_difficulty): 
     """
     Perform multiplication on decimals depending on the difficulty:
-    Easy --> .x * integeer 
-    Medium --> x.x * integer
-    Hard --> x.x * integer (xx both numbers less than or equal to 15)
+    Easy --> x.xx * integer 
+    Medium --> xx.x * x.x
+    Hard --> xx.xx * x.xx 
     """
     user_score_add = 0 
     incorrect_multiplication_decimal_add = 0
@@ -574,7 +574,7 @@ def multiplication_decimal(user_difficulty):
         pos_neg_value = -1
 
     if user_difficulty == 1: 
-        first_number = float(dec.Decimal(str(pos_neg_value*round(random.random(),1))))
+        first_number = float(random.ranint(1,9)+dec.Decimal(str(pos_neg_value*round(random.random(),2))))
         second_number = int(random.randint(1,9))
         answer = first_number * second_number
 
@@ -599,8 +599,8 @@ def multiplication_decimal(user_difficulty):
 
 
     if user_difficulty == 2: 
-        first_number = float(random.randint(1,9)+dec.Decimal(str(pos_neg_value*round(random.random(),1))))
-        second_number = int(random.randint(1,9))
+        first_number = float(random.randint(10,49)+dec.Decimal(str(pos_neg_value*round(random.random(),1))))
+        second_number = float(random.randint(1,9)+dec.Decimal(str(pos_neg_value*round(random.random(),1))))
         answer = first_number * second_number
 
         while True:
@@ -624,7 +624,7 @@ def multiplication_decimal(user_difficulty):
 
     if user_difficulty == 3: 
         first_number = float(random.randint(10,49)+dec.Decimal(str(pos_neg_value*round(random.random(),2))))
-        second_number = int(random.randint(1,9))
+        second_number = float(random.randint(1,9)+dec.Decimal(str(pos_neg_value*round(random.random(),2))))
         answer = first_number * second_number
 
         while True:
@@ -756,7 +756,7 @@ def division_decimal(user_difficulty):
             return user_score_add, incorrect_division_integer_add
 
 
-def addition_subtraction_fraction(user_difficulty): 
+def addition_subtraction_fraction(user_difficulty): #Haven't added to game yet 
     """
     Perform addition and subtraction of fractions:
     Easy --> x/x and x/x (denominator is a simple common factor)
