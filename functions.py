@@ -807,7 +807,53 @@ def addition_subtraction_fraction(user_difficulty): #Haven't added to game yet
             return user_score_add, incorrect_addition_subtraction_fraction_add 
 
 
+    if user_difficulty == 2: 
+        random_denominator = [0.5, 2, 3, 4, 5, 6, 7, 8, 9]
+        first_denom = random.random(1,9)
+        second_denom = first_denom * random.choice(random_denominator)
+
+        first_number = fractions.Fraction(random.randint(1,9),first_denom)
+        second_number = fractions.Fraction(random.randint(1,9), second_denom)
+
+        if plus_minus == "+":
+            answer = first_number + second_number
+        else:
+            answer = first_number - second_number 
+
+        #Verify user answer is a number 
+        while True:
+            user_answer = input(f"Compute: {first_number} {plus_minus} {second_number} = ").replace("−", "-") #Negative sign on your keyboard is not the "proper" minus sign
+            value_position_start = user_answer.find("=")
+            user_answer_value = user_answer[value_position_start+1:] 
+
+            try: 
+                int(user_answer_value)
+            except ValueError:
+                print(f"'{user_answer}' is not a valid response. Please enter a numerical value!")
+            else: 
+                break
+
+        if str(answer) == user_answer: 
+            user_score_add += 1 
+            return user_score_add, incorrect_addition_subtraction_fraction_add 
+        else:
+            incorrect_addition_subtraction_fraction_add  += 1
+            return user_score_add, incorrect_addition_subtraction_fraction_add 
+
+
 def multiplication_fraction(user_difficulty):
+    """
+    Perform multiplication of fractions:
+    Easy --> fraction * integer
+    Medium --> (x/x) * (x/x)
+    Hard --> (x/x) * (x/x) (multiplied by a common factor diagonally) or (multiplied by a common factor vertically)
+    """
+    user_score_add = 0 
+    incorrect_multiplication_fraction_add = 0 
+
+    #Random multiplication (top left to bottom right, reverse of that, second number vertically, reverse of that)
+
+
     pass 
 
 def division_fraction(user_difficulty): 
