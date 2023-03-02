@@ -760,7 +760,7 @@ def addition_subtraction_fraction(user_difficulty): #Haven't added to game yet
     """
     Perform addition and subtraction of fractions:
     Easy --> x/x and x/x (denominator is a simple common factor)
-    Medium --> x/x and x/x (denonminator is not a common factor )
+    Medium --> x/x and x/x (denonminator is not a common factor)
     Hard --> x/xx and xx/x (denominator is not a commoon factor)
     
     """
