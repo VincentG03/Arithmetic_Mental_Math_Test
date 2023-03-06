@@ -88,7 +88,6 @@ def run_questions(user_difficulty, user_questions):
             user_score += user_score_add
             incorrect_multiplication_decimal_total += incorrect_multiplication_decimal_add
         else: #Run division_decimal 
-            print('runngin div dec ')
             user_score_add, incorrect_division_decimal_add = division_decimal(user_difficulty)
             user_score += user_score_add
             incorrect_division_decimal_total += incorrect_division_decimal_add
